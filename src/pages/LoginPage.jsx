@@ -47,7 +47,7 @@ const LoginPage = () => {
                     isRequired
                     type="email"
                     label="Email"
-                    defaultValue="junior@nextui.org"
+                    // defaultValue="junior@nextui.org"
                     className="max-w-md"
                     {...register("email", { required: true })}
                     />
@@ -58,7 +58,7 @@ const LoginPage = () => {
                     isRequired
                     type="password"
                     label="Password"
-                    defaultValue="junior"
+                    // defaultValue="junior"
                     className="max-w-md"
                     {...register("password", { required: true })}
                     />
@@ -69,7 +69,7 @@ const LoginPage = () => {
             {/* <Divider /> */}
             <CardFooter className="justify-center">
               <Button type="submit" color="success">
-                Login
+                Sign in
               </Button>
             </CardFooter>
           </Card>
