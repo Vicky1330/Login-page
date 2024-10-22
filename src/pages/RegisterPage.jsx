@@ -1,28 +1,38 @@
-import React from "react";
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
-  Divider,
-  Link,
   Image,
   Input,
   Button,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
+import { userRegister } from "../controllers/userController";
+import { useNavigate } from "react-router-dom";
+
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({});
-
+  const onSubmit = async (data) => {
+    console.log(data);
+    const response = await userRegister(data);
+    if(response.status == 201){
+      console.log(response);
+      navigate("/login")
+    }else{
+      console.log(response.message);
+    }
+  };
   return (
     <div className="min-h-screen">
-      <div className="flex items-center justify-center h-screen ">
-        <form onSubmit={handleSubmit(console.log)}>
+      <div className="flex items-center justify-center min-h-screen ">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Card className="w-96 ">
             <CardHeader className="flex flex-col gap-3">
               <Image

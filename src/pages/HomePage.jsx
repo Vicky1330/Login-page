@@ -9,7 +9,7 @@ const HomePage = () => {
             <div className="flex justify-center items-center p-5 pt-10">
                 <h1 className="font-bold text-7xl">Welcome </h1>
             </div>
-            <nav>
+            {/* <nav>
                 <ul className="flex justify-center gap-4 p-2">
                 <li>
                     <NavLink to="/login">
@@ -26,7 +26,7 @@ const HomePage = () => {
                     </NavLink>
                 </li>
                 </ul>
-            </nav>
+            </nav> */}
 
         </div>
     </>

@@ -9,23 +9,33 @@ import {
   Image,
   Input,
   Button,
+  Checkbox,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
+import { userLogin } from "../controllers/userController";
+import { useAuth } from "../hooks/useAuth";
 
 const LoginPage = () => {
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({});
 
+  const onSubmit = async (formData)=>{
+    const response = await login(formData);
+  
+  }
+
   return (
     <div className="min-h-screen">
-      <div className="flex items-center justify-center h-screen ">
-        <form onSubmit={handleSubmit(console.log)}>
+      <div className="flex items-center justify-center min-h-screen ">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Card className="w-96 ">
             <CardHeader className="flex flex-col gap-3">
               <Image
+                className="rounded-full"
                 alt="nextui logo"
                 height={100}
                 radius="md"
@@ -64,6 +74,11 @@ const LoginPage = () => {
                     />
                     {errors.password && <span>This field is required</span>}
                 </div>
+                <Checkbox
+                  color="success"
+                  name = "rememberMe"
+                  {...register("rememberMe")}
+                >Remember this device</Checkbox>
               </div>
             </CardBody>
             {/* <Divider /> */}
