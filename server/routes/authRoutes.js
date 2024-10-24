@@ -1,6 +1,5 @@
-//(Routes for authentication: login, register, etc.)
 import express from 'express';
-import { login, refreshTokenHandler, register } from '../controllers/authController.js';
+import { login, logout, refreshTokenHandler, register } from '../controllers/authController.js';
 import tokenMiddleware from '../middleware/tokenMiddleware.js';
 
 
@@ -10,6 +9,7 @@ router.post('/register', register);
 router.post('/login', login);
 // // Route for refreshing the access token
 router.get('/refresh-token', tokenMiddleware, refreshTokenHandler);
-// router.post('/logout', logout);
+router.post('/logout', logout);
+// router.post('/createRestaurant',tokenMiddleware, printRestaurant);
 
 export {router as authRoutes};

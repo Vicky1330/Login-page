@@ -26,7 +26,9 @@ const AuthProvider = ({ children }) => {
         console.log("authLogin", response);
         const { data } = response;
         setAuthData(data);
-        localStorage.setItem("authData", JSON.stringify(data)); // Save to local storage
+        const accessToken = response.data.accessToken;
+        const authDetails = {"accessToken": accessToken, "users": response.data.user}
+        localStorage.setItem("authData", JSON.stringify(authDetails)); // Save to local storage
         return { response, status: response.status };
     } catch (error) {
         return { error, status: error.response?.status || 500 };
@@ -89,15 +91,23 @@ const AuthProvider = ({ children }) => {
   }, [authData]);
 
   useEffect(() => {
-    console.log("Verify login", loading, authData);
+    // console.log("Verify login", loading, authData);
+    // public routes that don't require authentication
+    const publicRoutes = ["/login", "/register", "/about"]; 
+  
     if (!loading) {
       if (authData) {
-        navigate("/profile", { replace: true });
-      } else if (location.pathname !== "/login") {
+        // If authenticated, redirect to profile or any private page
+        if (location.pathname === "/login" || location.pathname === "/register") {
+          navigate("/profile", { replace: true });
+        }
+      } else if (!publicRoutes.includes(location.pathname)) {
+        // Redirect to login if not authenticated and not on a public route
         navigate("/login", { replace: true });
       }
     }
   }, [authData, loading, navigate, location.pathname]);
+  
 
   const login = async (formData) => {
     try {
@@ -107,11 +117,21 @@ const AuthProvider = ({ children }) => {
       console.error("Login failed", error);
     }
   };
-  const logout = () => {
-    setAuthData(null);
-    localStorage.removeItem("authData"); // Clear auth data from local storage
+
+
+const logout = async () => {
+  try {
+    await api.post("/auth/logout"); 
+  
+    setAuthData(null); 
+    localStorage.removeItem("authData");
+    
     navigate("/login", { replace: true });
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
 };
+
 
 
   return (

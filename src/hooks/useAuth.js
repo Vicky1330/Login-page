@@ -59,6 +59,6 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export const useAuth = () => {
-  const { authData, login, refreshToken } = useContext(AuthContext);
-  return { authData, login, refreshToken };
+  const { authData, login, refreshToken, logout } = useContext(AuthContext);
+  return { authData, login, refreshToken, logout };
 };

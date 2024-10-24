@@ -1,8 +1,18 @@
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { NavLink } from "react-router-dom";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link} from "@nextui-org/react";
+import { useAuth } from "../../hooks/useAuth";
 
 const CustomNavbar = () => {
+  const { logout } = useAuth();
+  const handleLogout = async () =>{
+    const response = await logout();
+    // if(response === 200){
+    //   console.log("Logged Out Successfully");
+    // } else {
+    //   console.log("Error logging out");
+    // }
+  }
   return (
     <>
     <Navbar
@@ -77,7 +87,7 @@ const CustomNavbar = () => {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
